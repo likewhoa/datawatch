@@ -1,5 +1,5 @@
 # DATAMINERWATCH
-###### *A bash script designed to look after Xolokram Primeminer when mining Datacoins* 
+###### *A bash script designed to look after Xolo's Primeminer when mining Datacoins* 
 
 ## Why? For what?
 
