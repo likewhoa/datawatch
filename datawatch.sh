@@ -2,14 +2,14 @@
 
 # Git repositury: https://github.com/arkhebuz/datawatch/
 # Readme: https://github.com/arkhebuz/datawatch/README.md
-# Donate:  XPM: AV3w57CVmRdEA22qNiY5JFDx1J5wVUciBY
-#          DTC: DMy7cMjzWycNUB4FWz2YJEmh8EET2XDvqz
+# Donate:  DTC: DMy7cMjzWycNUB4FWz2YJEmh8EET2XDvqz
+#          XPM: AV3w57CVmRdEA22qNiY5JFDx1J5wVUciBY
 
 if [ "$#" -ne "2" ] ; then          # Script needs two parameters.
     echo "USAGE:                    ./datawatch.sh POOL MODE"
     echo "DTC pools:                xpool, gpool"
     echo "Modes:                    stay, jump"
-    echo "Example:                  ./datawatch.sh xpool stay"
+    echo "Example:                  ./datawatch.sh xpool jump"
     echo "(xpool - dtc.xpoll.xram.co | gpool - dtc.gpoool.net)"
     echo "WARNING: you have to edit script if you haven't do so."
     exit
@@ -21,7 +21,7 @@ logkat="/home/arkhebuz/datacoin"
 # Catalog corresponding to network interface you are using, containing carrier file (like /sys/class/net/eth0/carrier) having value of either 1 if network is up or 0 if it's down.
 netinterface="/sys/class/net/eth0"
 
-# Interval in seconds bettwen checks, too small will make the script steal cpu cycles and usually won't let the miner recover under it's own steam (if possible). Ten minutes is good enough in my expirence.
+# Interval in seconds bettwen checks, too small will make the script steal cpu cycles and usually won't let the miner recover under it's own steam when possible. Ten minutes is good enough in my expirence.
 sleeptime=600
 
 function minerlaunch {
@@ -36,7 +36,7 @@ function minerlaunch {
     
     # Miner settings. Adjust to yourself. Quick overview:
     # ./primeminer                                                          <-- Xolokram primeminer binary location. Default is in the same catalog as this script when launched as ./datawatch.sh POOL MODE
-    # -pooluser=DMy7cMjzWycNUB4FWz2YJEmh8EET2XDvqz                          <-- XPM address.
+    # -pooluser=DMy7cMjzWycNUB4FWz2YJEmh8EET2XDvqz                          <-- DTC address.
     # -genproclimit="8"                                                     <-- Number of threads to use.
     # -sievesize="1000000" -sieveextensions="10" -sievepercentage="9"       <-- These parameters affect mining. Nobody wants to say what this three are exactly doing. Mayby nobody knows?
     #                                                                           For me it works little better with these values. Either play with them or cut this three out.
