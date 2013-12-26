@@ -107,7 +107,7 @@ while true ; do
             echo "$(date) : primeminer system:111 communicate hang, line: $systemline (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
             echo "$(date) : primeminer system:111 communicate hang, line: $systemline (last master: $masterline)" >> $logkat/netlog
             if [ "$2" = "jump" ] ; then
-                if [ "$hammer" = "xpool" ] ; then  # If you wondered what hammer is for...
+                if [ "$hammer" = "xpool" ] ; then
                     hammer="gpool"
                 else
                     hammer="xpool"
