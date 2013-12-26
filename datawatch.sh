@@ -84,7 +84,7 @@ while true ; do
     reccline=$(grep -in "force reconnect if possible" "$logkat/$filename" | tail -1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')        # Get line number of last "force reconnect if possible" comm.
     if [ -n "$reccline" ] ; then
         masterline=$(grep -in "master" "$logkat/$filename" | tail -1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')           # Get last [MASTER] communicate line number.
-        if [ "$reccline" -gt "$masterline" ] ; then         # If theres no "[MASTER]" somewhere after "force reconnect if possible!" then kill primeminer and write to logs (and start on another server in jumping mode). Works good with long enough sleeptime.
+        if [ "$reccline" -gt "$masterline" ] ; then         # If theres no "[MASTER]" somewhere after "force reconnect if possible!" then kill primeminer, write to logs and start (on another server when in jumping mode). Works good with long enough sleeptime.
             echo "$(date) : primeminer connection lost, line: $reccline (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
             echo "$(date) : primeminer connection lost, line: $reccline (last master: $masterline)" >> $logkat/netlog
             if [ "$2" = "jump" ] ; then
