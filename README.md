@@ -22,7 +22,7 @@ So I have written one myself: [https://github.com/arkhebuz/primewatch](https://g
 * Launch script, pass to it which pool and mode it should use, like `./datawatch.sh gpool stay`. There are two modes: "stay" and "jump". When stay (default) is used, script doesn't change the pool on connection hang. When jump is used, script will jump from one pool to another on hangs, constantly mining to the same DTC address. Currently xpool has 0.5 DTC payout barrier, while gpool 0.3 DTC. After launch you can just leave the terminal on, or use `screen`, or put script in autostart, or do something else. I prefer the second option.
 
 ## Quirks
-* Every primeminer run has it's own logfile with it's output, named witch launch time (YYYY-MM-DD_hh.mm.ss). Additionaly there's a `netlog` file, where only communicates from script about connection are stored.
+* Every primeminer run has it's own logfile with it's output, named with launch time (YYYY-MM-DD_hh.mm.ss). Additionaly there's a `netlog` file, where only communicates from script about connection are stored.
 * Dependencies? Primeminer, pkill, pgrep, bash, grep... Nothing special.
 * Aha, works for me. May not work for you. Tested on Debian Stable.
 * Donate? Just a tip maybe?  
