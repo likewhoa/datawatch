@@ -16,7 +16,7 @@ So I have written one myself: [https://github.com/arkhebuz/primewatch](https://g
 * **Edit** datawatch.sh file, all this is commented in code. You need to:
   1. Change catalog where logs will be stored;
   2. Set your network interface virtual filesystem catalog (like `/sys/class/net/eth0`);
-  3. Set interval in seconds between checks. Should be large enough to let the miner recover under it's own steam in most cases. Also, too small will make script steal cpu cycles from miner;
+  3. Set interval in seconds between checks. Should be large enough to let the miner recover under its own steam in most cases. Also, too small will make script steal cpu cycles from miner;
   4. Set primeminer binary location;
   5. Edit primeminer launch parameters. This script is written with [http://dtc.xpool.xram.co](http://dtc.xpool.xram.co) and [http://dtc.gpool.net](http://dtc.gpool.net) pools in mind, see my comments in code and check their sites;
 * Launch script, pass to it which pool and mode it should use, like `./datawatch.sh gpool stay`. There are two modes: "stay" and "jump". When stay (default) is used, script doesn't change the pool on connection hang. When jump is used, script will jump from one pool to another on hangs, constantly mining to the same DTC address. Currently xpool has 0.5 DTC payout barrier, while gpool 0.3 DTC. You can just leave the terminal on, or use `screen`, or put script in autostart, or do something else. I prefer the second option.
