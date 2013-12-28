@@ -111,6 +111,7 @@ while true ; do
             fi
             pkill primeminer
             minerlaunch $hammer
+            break
         fi
     done
     
