@@ -83,21 +83,19 @@ while true ; do
     
     # I had long lasting hangs with "force reconnect if possible!" communicate on my box.
     connection_lost=$(grep -in "force reconnect if possible" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')        # Get line number of last "force reconnect if possible" comm.
-    if [ -z "$connection_lost" ] ; then connection_lost=0; fi
     
     # I had hangs with "system:111" communicate too. Works like above.
     system111_comm_hang=$(grep -in "system:111" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
-    if [ -z "$system111_comm_hang" ] ; then system111_comm_hang=0; fi
     
     # In case when miner can't connect even at beggining, I guess. Thats when I see 'system:110'.
     system110_cant_connect=$(grep -in "system:110" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
-    if [ -z "$system110_cant_connect" ] ; then system110_cant_connect=0; fi
     
     # Get last [MASTER] communicate line number.
     masterline=$(grep -in "master" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
     if [ -z "$masterline" ] ; then masterline=1; fi
     
     for hangs in connection_lost system111_comm_hang system110_cant_connect; do
+        if [ -z "${!hangs}" ] ; then eval $hangs=0; fi
         if [ "${!hangs}" -gt "$masterline" ] ; then
             # If theres no "[MASTER]" somewhere after error communicate then kill primeminer, write to logs and start (on another server when in jumping mode). Works good with long enough sleeptime.
             echo "$(date) : primeminer $hangs, line: ${!hangs} (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
