@@ -81,9 +81,12 @@ while true ; do
     fi
     
     # I had long lasting hangs with "force reconnect if possible!" communicate on my box.
-    reccline=$(grep -in "force reconnect if possible" "$logkat/$filename" | tail -1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')        # Get line number of last "force reconnect if possible" comm.
+    reccline=$(grep -in "force reconnect if possible" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')        # Get line number of last "force reconnect if possible" comm.
     if [ -n "$reccline" ] ; then
-        masterline=$(grep -in "master" "$logkat/$filename" | tail -1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')           # Get last [MASTER] communicate line number.
+        masterline=$(grep -in "master" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')           # Get last [MASTER] communicate line number.
+        if [ -z "$masterline" ] ; then
+            masterline=0
+        fi
         if [ "$reccline" -gt "$masterline" ] ; then         # If theres no "[MASTER]" somewhere after "force reconnect if possible!" then kill primeminer, write to logs and start (on another server when in jumping mode). Works good with long enough sleeptime.
             echo "$(date) : primeminer connection lost, line: $reccline (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
             echo "$(date) : primeminer connection lost, line: $reccline (last master: $masterline)" >> $logkat/netlog
@@ -100,12 +103,37 @@ while true ; do
     fi
     
     # I had hangs with "system:111" communicate too. Algorithm the same as above.
-    systemline=$(grep -in "system:111" "$logkat/$filename" | tail -1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+    systemline=$(grep -in "system:111" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
     if [ -n "$systemline" ] ; then
-        masterline=$(grep -in "master" "$logkat/$filename" | tail -1 | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+        masterline=$(grep -in "master" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
+        if [ -z "$masterline" ] ; then
+            masterline=0
+        fi
         if [ "$systemline" -gt "$masterline" ] ; then
             echo "$(date) : primeminer system:111 communicate hang, line: $systemline (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
             echo "$(date) : primeminer system:111 communicate hang, line: $systemline (last master: $masterline)" >> $logkat/netlog
+            if [ "$2" = "jump" ] ; then
+                if [ "$hammer" = "xpool" ] ; then
+                    hammer="gpool"
+                else
+                    hammer="xpool"
+                fi
+            fi
+            pkill primeminer
+            minerlaunch $hammer
+        fi
+    fi
+    
+    # In case when miner can't connect even at beggining.
+    systemline2=$(grep -in "system:110" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
+    if [ -n "$systemline2" ] ; then
+        masterline=$(grep -in "master" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
+        if [ -z "$masterline" ] ; then
+            masterline=0
+        fi
+        if [ "$systemline2" -gt "$masterline" ] ; then
+            echo "$(date) : primeminer system:110 can't connect, line: $systemline2 (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
+            echo "$(date) : primeminer system:110 can't connect, line: $systemline2 (last master: $masterline)" >> $logkat/netlog
             if [ "$2" = "jump" ] ; then
                 if [ "$hammer" = "xpool" ] ; then
                     hammer="gpool"
