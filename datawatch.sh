@@ -125,7 +125,7 @@ while true ; do
         fi
     fi
     
-    # In case when miner can't connect even at beggining.
+    # In case when miner can't connect even at beggining, I guess. Thats when I see 'system:110'.
     systemline2=$(grep -in "system:110" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
     if [ -n "$systemline2" ] ; then
         masterline=$(grep -in "master" "$logkat/$filename" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/; $!d')
