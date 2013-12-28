@@ -54,7 +54,8 @@ comodo=8.26.56.26
 hammer=$1 # you can't touch this
 
 while true ; do
-    if [ "1" -ge $(ping -q -w2 -c2 $google1 | grep -o -P ".{0,2}received" | head -c 1) ] ; then             # Ping Google to check internet, if problems proceed. 
+    ping=$(ping -q -w2 -c2 $google1 | grep -o -P ".{0,2}received" | head -c 1)
+    if [ "1" -ge "$ping" ] ; then             # Ping Google to check internet, if problems proceed. 
         n=0
         carrier=$(cat $netinterface/carrier)
         
