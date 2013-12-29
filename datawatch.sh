@@ -26,7 +26,7 @@ sleeptime=600
 
 function minerlaunch {
     if [ "$1" = "xpool" ] ; then
-        ip="dtc.xpool.xram.co" 
+        ip="162.243.241.151" 
         port="1335"
     elif [ "$1" = "gpool" ] ; then
         ip="162.243.41.59"
@@ -36,7 +36,7 @@ function minerlaunch {
     
     # Miner settings. Adjust to yourself. Quick overview:
     # ./primeminer                                                          <-- Xolokram primeminer binary location. Default is in the same catalog as this script when launched as ./datawatch.sh POOL MODE
-    # -pooluser=DMy7cMjzWycNUB4FWz2YJEmh8EET2XDvqz                          <-- DTC address.
+    # -pooluser=DMy7cMjzWycNUB4FWz2YJEmh8EET2XDvqz                          <-- DTC address. You can add gpool worker id here.
     # -genproclimit="8"                                                     <-- Number of threads to use.
     # -sievesize="1000000" -sieveextensions="10" -sievepercentage="9"       <-- These parameters affect mining. Nobody wants to say what this three are exactly doing. Mayby nobody knows?
     #                                                                           For me it works little better with these values. Either play with them or cut this three out.
@@ -97,7 +97,7 @@ while true ; do
     for hangs in connection_lost system111_comm_hang system110_cant_connect; do
         if [ -z "${!hangs}" ] ; then eval $hangs=0; fi
         if [ "${!hangs}" -gt "$masterline" ] ; then
-            # If theres no "[MASTER]" somewhere after error communicate then kill primeminer, write to logs and start (on another server when in jumping mode). Works good with long enough sleeptime.
+            # If theres no "[MASTER]" somewhere after error communicate then kill primeminer, write to logs and start (on another pool when in jumping mode). Works good with long enough sleeptime.
             echo "$(date) : primeminer $hangs, line: ${!hangs} (last master: $masterline)" 2>&1 | tee -a $logkat/$filename
             echo "$(date) : primeminer $hangs, line: ${!hangs} (last master: $masterline)" >> $logkat/netlog
             if [ "$2" = "jump" ] ; then
