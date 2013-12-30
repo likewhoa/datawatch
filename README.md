@@ -22,7 +22,7 @@ Note that automatic pool switching on errors can save you from downtime caused b
   4. Set primeminer binary location;
   5. Edit primeminer launch parameters. This script is written with [http://dtc.xpool.xram.co](http://dtc.xpool.xram.co) and [http://dtc.gpool.net](http://dtc.gpool.net) pools in mind, see my comments in code and check their sites;
 * Launch script, pass to it which pool and mode it should use, like `./datawatch.sh gpool stay`. 
-* There are two modes: "stay" and "jump". When stay (default) is used, script doesn't change the pool on connection hang. When jump is used, script will jump from one pool to another on hangs, constantly mining to the same DTC address. Currently xpool has 0.5 DTC payout barrier, while gpool 0.3 DTC. 
+* There are two modes: "stay" and "jump". When stay (default) is used, script doesn't change the pool on connection hang. When jump is used, script will jump from one pool to another on hangs, constantly mining to the same Datacoin address. Currently xpool has 0.5 DTC payout barrier, while gpool 0.3 DTC. 
 * You can launch it in terminal and just leave it on. I prefer keeping it inside GNU Screen, so I can easily attach it and kill when I need more computing power on my box, then relaunch when I'm done. In case of VPS you might want to keep script alive using supervisor, for example.
 
 ## Quirks
