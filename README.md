@@ -10,11 +10,11 @@ So I have written one myself: [https://github.com/arkhebuz/primewatch](https://g
 * Is miner running at all? If not, launch again.
 * Did miner hang somewhere at connection after all? I had hangs lasting an hour or two with lots of `force reconnect if possible!` or `system:111` communicates (on my box usually one of them was clearly dominating, not both at the same time), without any `[MASTER]` line printed to output. Script simply compares line numbers of last `force reconnect if possible!` and `system:111` communicates with line number of last `[MASTER]` communicate. If `[MASTER]` is not the last one, primeminer is killed, launched (if in jump mode pool is changed) and info is written to logs.
 
-Note that automatic pool switching on errors can save you from downtime caused by pool crash, as the second of two currently running DTC pools is in early beta stage and still a bit unstable.
+Note that automatic pool switching on errors can save you from downtime caused by pool crash, as the second of two currently running Datacoin pools is in early beta stage and still a bit unstable.
 
 ## Quick how-to
 * I'm assuming you have primeminer binary and basic Linux skills. If not, google it, check peercointalk.org forum, etc.
-* Get dataminerwatch script, either copy-paste from this site or use `git clone https://github.com/arkhebuz/datawatch` command. Use `chmod +x datawatch.sh` when necessary.
+* Get dataminerwatch script, either copy-paste from this site or use `git clone https://github.com/arkhebuz/datawatch` command. Use `chmod +x datawatch.sh` to make the script executable if necessary.
 * **Edit** datawatch.sh file, all this is commented in code.  What you need to do there:
   1. Change catalog where logs will be stored;
   2. Set your network interface virtual filesystem catalog (like `/sys/class/net/eth0`);
